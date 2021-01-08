@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, useScrollTrigger, Container, Tab, Tabs, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, useScrollTrigger, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
 function ElevationScroll(props) {
@@ -35,7 +35,7 @@ export default function ElevateAppBar(props) {
                         <Button
                             disableRipple
                             component={Link} to='/nominated'
-                            style={{ marginLeft: 'auto' }}
+                            style={{ marginLeft: 'auto', color: 'white' }}
                         >
                             Nominated
                         </Button>

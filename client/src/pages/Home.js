@@ -31,73 +31,61 @@ const Home = (props) => {
     const [results, setResults] = useState([]);
     const [open, setOpen] = useState(false);
     const [nominated, setNominated] = useState([]);
-    const [count, setCount] = useState(0)
 
     useEffect(() => {
-        loadNominated()
+        setNominated(JSON.parse(localStorage.getItem('movies')))
     }, [])
-
-    function loadNominated() {
-        API.get()
-            .then(res => {
-                // console.log(res)
-                setNominated(res.data.map(movie => movie.title))
-                localStorage.setItem('movies', JSON.stringify(nominated))
-
-            })
-            .catch(err => console.log(err));
-    }
-
-    console.log('nominated', nominated)
 
     function searchMovies(query) {
         API.search(query)
             .then(res => {
                 // console.log(res);
-                setResults(res.data.Search)
+                if ('Error' in res.data) {
+                    alert(`${res.data.Error} Please search a different title`)
+                } else {
+                    setResults(res.data.Search)
+                }
             })
             .catch(err => console.log(err));
     };
 
-    // console.log(results)
-    // console.log(results.length)
-    // console.log(results[0].Poster)
-
     function handleInputChange(event) {
         const { value } = event.target;
-        // console.log(value);
         setSearch(value)
     };
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        searchMovies(search)
-        setSearch("");
+        if (search !== '') {
+            searchMovies(search)
+            setSearch("");
+        }
     };
 
-    function saveMovie(object) {
-        API.save(object)
-            .then(res => {
-                console.log(res)
-                setCount(count + 1)
-            })
-            .catch(err => console.log(err));
-
-        loadNominated()
-    }
-
-    function handleButtonClick(event) {
-        // event.preventDefault()
+    function nominate(event) {
+        event.preventDefault()
         event.stopPropagation()
-        setOpen(true);
 
         const title = event.currentTarget.getAttribute("title")
         const year = event.currentTarget.getAttribute("year")
         const image = event.currentTarget.getAttribute("image")
 
-        // console.log({ title, year, image })
-        saveMovie({ title, year, image });
+        const movieObject = ({ title, year, image });
+
+        API.save(movieObject)
+            .then(res => {
+                // console.log(res)
+                setOpen(true);
+                setNominated([...nominated, movieObject])
+            })
+            .then(res => {
+                localStorage.setItem('movies', JSON.stringify([...nominated, movieObject]))
+            })
+            .catch(err => console.log(err));
     }
+
+    console.log(nominated)
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -107,11 +95,19 @@ const Home = (props) => {
     };
 
     return (
-        <Grid container justify='center' alignItems='center' 
-            style={{ backgroundColor: 'lightblue'}}>
+        <Grid container justify='center' alignItems='center'>
 
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item >
+                    {nominated.length >= 5 ?
+                        <Alert severity="warning" style={{ textAlign: 'center' }}>
+                            You already nominated the max movie titles (5).<br />
+                            If you would like to change your nominations,<br />
+                            click on the Nominated tab above
+                        </Alert>
+                        :
+                        null
+                    }
                     <Typography variant='h2' gutterBottom>
                         The Shoppies
                     </Typography>
@@ -178,7 +174,7 @@ const Home = (props) => {
                                             title={movie.Title}
                                             year={movie.Year}
                                             image={movie.Poster}
-                                            onClick={handleButtonClick}
+                                            onClick={nominate}
                                             disabled={nominated.includes(movie.Title) || nominated.length >= 5}
                                         >
                                             Nominate
@@ -191,7 +187,7 @@ const Home = (props) => {
                 }
                 <Snackbar
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
