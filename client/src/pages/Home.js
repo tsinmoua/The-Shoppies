@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Button, Card, CardMedia, Grid, makeStyles, Snackbar, TextField, Typography } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -30,6 +30,20 @@ const Home = (props) => {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([]);
     const [open, setOpen] = useState(false);
+    const [nominated, setNominated] = useState([]);
+
+    useEffect(() => {
+        loadNominated()
+    }, [])
+
+    function loadNominated() {
+        API.get()
+            .then(res => {
+                console.log(res)
+                setNominated(res.data)
+            })
+            .catch(err => console.log(err));
+    }
 
     function searchMovies(query) {
         API.search(query)
