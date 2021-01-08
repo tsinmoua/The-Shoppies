@@ -5,7 +5,7 @@ const APIKEY = process.env.REACT_APP_OMDB_KEY;
 
 export default {
   search: function (query) {
-    return axios.get("http://www.omdbapi.com/?apikey=" + APIKEY + "&t=" + query);
+    return axios.get("http://www.omdbapi.com/?apikey=" + APIKEY + "&s=" + query);
   },
 
   save: function (movieData) {
