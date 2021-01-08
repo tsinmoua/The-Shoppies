@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, useScrollTrigger, Container, Tab, Tabs } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, useScrollTrigger, Container, Tab, Tabs, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
 function ElevationScroll(props) {
@@ -24,11 +24,21 @@ export default function ElevateAppBar(props) {
             <ElevationScroll {...props}>
                 <AppBar>
                     <Toolbar>
-                        <Typography variant="h6">The Shoppies</Typography>
+                        <Typography
+                            variant="h4"
+                            component={Link} to='/'
+                            style={{ textDecoration: 'none', color: 'white' }}
+                        >
+                            The Shoppies
+                        </Typography>
 
-                        <Tabs style={{ marginLeft: 'auto' }}>
-                            <Tab label='Nominated' component={Link} to='/nominated' />
-                        </Tabs>
+                        <Button
+                            disableRipple
+                            component={Link} to='/nominated'
+                            style={{ marginLeft: 'auto' }}
+                        >
+                            Nominated
+                        </Button>
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
