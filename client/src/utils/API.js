@@ -9,14 +9,14 @@ export default {
   },
 
   save: function (movieData) {
-    return axios.post("/api/movie", movieData);
+    return axios.post("/api/movies", movieData);
   },
 
   get: function () {
-    return axios.get("/api/movie");
+    return axios.get("/api/movies");
   },
 
   delete: function (id) {
-    return axios.delete("/api/movie/" + id);
+    return axios.delete("/api/movies/" + id);
   },
 };

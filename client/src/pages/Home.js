@@ -1,7 +1,12 @@
 import React, { useState } from "react"
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardMedia, Grid, makeStyles, Snackbar, TextField, Typography } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import API from "../utils/API";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
     searchInput: {
@@ -24,6 +29,7 @@ const Home = (props) => {
 
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([]);
+    const [open, setOpen] = useState(false);
 
     function searchMovies(query) {
         API.search(query)
@@ -61,16 +67,22 @@ const Home = (props) => {
     function handleButtonClick(event) {
         // event.preventDefault()
         event.stopPropagation()
+        setOpen(true);
 
         const title = event.currentTarget.getAttribute("title")
         const year = event.currentTarget.getAttribute("year")
         const image = event.currentTarget.getAttribute("image")
 
-        console.log({ title, year, image })
-
+        // console.log({ title, year, image })
         saveMovie({ title, year, image });
-
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     return (
         <div style={{ backgroundColor: 'lightblue' }}>
@@ -153,6 +165,16 @@ const Home = (props) => {
                         ))
                     )
                 }
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleClose} severity="success">
+                        Successfully nominated
+                    </Alert>
+                </Snackbar>
             </Grid>
 
         </div >
