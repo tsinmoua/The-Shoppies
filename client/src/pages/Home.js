@@ -31,6 +31,7 @@ const Home = (props) => {
     const [results, setResults] = useState([]);
     const [open, setOpen] = useState(false);
     const [nominated, setNominated] = useState([]);
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
         loadNominated()
@@ -39,11 +40,15 @@ const Home = (props) => {
     function loadNominated() {
         API.get()
             .then(res => {
-                console.log(res)
-                setNominated(res.data)
+                // console.log(res)
+                setNominated(res.data.map(movie => movie.title))
+                localStorage.setItem('movies', JSON.stringify(nominated))
+
             })
             .catch(err => console.log(err));
     }
+
+    console.log('nominated', nominated)
 
     function searchMovies(query) {
         API.search(query)
@@ -70,12 +75,15 @@ const Home = (props) => {
         setSearch("");
     };
 
-    function saveMovie(object, index) {
+    function saveMovie(object) {
         API.save(object)
             .then(res => {
                 console.log(res)
+                setCount(count + 1)
             })
             .catch(err => console.log(err));
+
+        loadNominated()
     }
 
     function handleButtonClick(event) {
@@ -99,7 +107,8 @@ const Home = (props) => {
     };
 
     return (
-        <div style={{ backgroundColor: 'lightblue' }}>
+        <Grid container justify='center' alignItems='center' 
+            style={{ backgroundColor: 'lightblue'}}>
 
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item >
@@ -170,6 +179,7 @@ const Home = (props) => {
                                             year={movie.Year}
                                             image={movie.Poster}
                                             onClick={handleButtonClick}
+                                            disabled={nominated.includes(movie.Title) || nominated.length >= 5}
                                         >
                                             Nominate
                                         </Button>
@@ -191,7 +201,7 @@ const Home = (props) => {
                 </Snackbar>
             </Grid>
 
-        </div >
+        </Grid>
     )
 };
 
