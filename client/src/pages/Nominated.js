@@ -31,15 +31,14 @@ const Nominated = (props) => {
 
         API.get()
             .then(res => {
-                let data = res.data
-                console.log('Data from useEffect get API ', data)
-                setVotes(data)
+                console.log('data from API ', res.data)
+                setVotes(res.data)
             })
             .catch(err => console.log(err));
     }, [deleted])
 
-    console.log('Check userNominations ', userNominations)
-    console.log('Local storage ', JSON.parse(localStorage.getItem('movies')))
+    // console.log('Check userNominations ', userNominations)
+    // console.log('Local storage ', JSON.parse(localStorage.getItem('movies')))
 
     function deleteUserNomination(title, index) {
         API.delete(title)
@@ -55,33 +54,46 @@ const Nominated = (props) => {
     }
 
     let titles = []
-    let obj = {};
-    let sortable = [];
+    let count = {};
+    let sortCount = [];
+    let results = []
 
     for (let i = 0; i < votes.length; i++) {
         titles.push(votes[i].title)
     }
 
     for (let i = 0; i < titles.length; i++) {
-        if (obj[titles[i]]) {
-            obj[titles[i]]++;
-        }
-        else {
-            obj[titles[i]] = 1;
+        if (count[titles[i]]) {
+            count[titles[i]]++;
+        } else {
+            count[titles[i]] = 1;
         }
     }
 
-    for (let movie in obj) {
-        sortable.push([movie, obj[movie]]);
+    for (let movie in count) {
+        sortCount.push([movie, count[movie]]);
     }
 
-    sortable.sort(function (a, b) {
-        return b[1] - a[1];
-    });
+    for (let i = 0; i < votes.length; i++) {
+        for (let j = 0; j < sortCount.length; j++) {
+            if (votes[i].title === sortCount[j][0]) {
+                votes[i].count = sortCount[j][1]
+            }
+        }
+    }
 
-    // console.log('votes', votes)
-    // console.log('sorted list ', sortable[0][0])
-    // console.log(votes.findIndex(movie => movie.title === sortable[0][0]))
+    votes.sort((a, b) => {
+        return b.count - a.count
+    })
+
+    for (let i = 0; i < votes.length; i++) {
+        results.push([votes[i].title, votes[i].year, votes[i].image, votes[i].count])
+    }
+
+    results = results.map(JSON.stringify)
+    results = new Set(results)
+    results = Array.from(results, JSON.parse)
+    console.log(results)
 
     function unNominate(event) {
         event.preventDefault()
@@ -150,7 +162,6 @@ const Nominated = (props) => {
                                             year={movie.year}
                                             image={movie.image}
                                             onClick={unNominate}
-                                        // disabled={userNominations.includes(movie.Title) || userNominations.length >= 5}
                                         >
                                             Un-Nominate
                                         </Button>
@@ -176,7 +187,49 @@ const Nominated = (props) => {
             <Typography variant='h6' gutterBottom>
                 Overall Nominations
             </Typography>
-
+            <Grid container justify='center' alignItems='center' >
+                {results.map((movie, index) => (
+                    <Card key={index} className={classes.movieCards}>
+                        <CardMedia style={{ height: '65%' }}>
+                            <img
+                                src={movie[2]}
+                                alt={`${movie[0]} Poster`}
+                                style={{ height: '100%', width: '100%' }}
+                            />
+                        </CardMedia>
+                        <Box style={{ padding: '1rem', height: '29%' }}>
+                            <Typography
+                                gutterBottom
+                                variant='subtitle2'
+                                style={{ fontWeight: 'bold' }}
+                            >
+                                {movie[0]}
+                            </Typography>
+                            <Typography
+                                variant="subtitle2"
+                                color="textSecondary"
+                            >
+                                Year Released: {movie[1]}
+                            </Typography>
+                            <Box
+                                display='flex'
+                                justifyContent='center'
+                                alignSelf="flex-end"
+                                style={{ paddingBottom: 'auto' }}
+                            >
+                                <Typography
+                                    gutterBottom
+                                    variant='h6'
+                                    style={{ fontWeight: 'bold' }}
+                                >
+                                    Nominations: {movie[3]}
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Card>
+                ))
+                }
+            </Grid>
         </Grid>
     )
 };

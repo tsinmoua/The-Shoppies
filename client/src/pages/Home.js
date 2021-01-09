@@ -41,7 +41,7 @@ const Home = (props) => {
     function searchMovies(query) {
         API.search(query)
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 if ('Error' in res.data) {
                     alert(`${res.data.Error} Please search a different title`)
                 } else {
@@ -153,7 +153,7 @@ const Home = (props) => {
                             <Card key={index} className={classes.movieCards}>
                                 <CardMedia style={{ height: '65%' }}>
                                     <img
-                                        src={movie.Poster}
+                                        src={movie.Poster === 'N/A' ? 'https://via.placeholder.com/150?text=No+Image' : movie.Poster}
                                         alt={`${movie.Title} Poster`}
                                         style={{ height: '100%', width: '100%' }}
                                     />
