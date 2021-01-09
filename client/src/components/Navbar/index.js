@@ -25,10 +25,24 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: 0,
+        paddingRight: 0
+    },
+    button: {
+        marginLeft: 'auto',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: 'transparent',
+            color: theme.palette.common.orange
+        }
     },
     title: {
-        flexGrow: 1,
-    },
+        fontSize: '2rem',
+        color: 'white',
+        textDecoration: 'none',
+        '&:hover': {
+            color: theme.palette.common.orange
+        }
+    }
 }));
 
 export default function ElevateAppBar(props) {
@@ -40,24 +54,24 @@ export default function ElevateAppBar(props) {
                 <AppBar>
                     <Toolbar>
                         <Typography
-                            variant="h3"
+                            variant="h4"
                             component={Link} to='/'
-                            style={{ textDecoration: 'none', color: 'white' }}
+                            className={classes.title}
                         >
                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                                 <img src={reel} alt='Movie Reel'
                                     style={{ height: '57px', margin: 'auto' }}
                                 />
                             </IconButton>
-                            The Shoppies
+                            THE SHOPPIES
                         </Typography>
 
                         <Button
                             disableRipple
                             component={Link} to='/nominated'
-                            style={{ marginLeft: 'auto', color: 'white' }}
+                            className={classes.button}
                         >
-                            Nominated
+                            Nominations
                         </Button>
                     </Toolbar>
                 </AppBar>
