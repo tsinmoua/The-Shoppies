@@ -106,14 +106,16 @@ const Home = (props) => {
                 <Grid item >
                     {nominated === null ? null : (
                         nominated.length >= 5 ?
-                            <Alert severity="warning" style={{ textAlign: 'center' }}>
+                            <Alert severity="warning" style={{ textAlign: 'center', margin: '1rem' }}>
                                 You have nominated the max amount of movies (5).<br />
                                 If you would like to change your nominations,<br />
                                 click on the Nominated tab above
                             </Alert>
                             : null
                     )}
-                    <Typography variant='h2' gutterBottom>
+                </Grid>
+                <Grid item>
+                    <Typography variant='h1' gutterBottom>
                         The Shoppies
                     </Typography>
                 </Grid>
@@ -122,7 +124,7 @@ const Home = (props) => {
                     <form onSubmit={handleFormSubmit}>
                         <TextField
                             id="outlined-basic"
-                            label="Search for a Movie"
+                            label="Search for a film"
                             variant="outlined"
                             className={classes.searchInput}
                             onChange={handleInputChange}
@@ -142,7 +144,18 @@ const Home = (props) => {
             </Grid>
 
             <Grid container justify='center' alignItems='center' >
-                {results.length === 0 ? null :
+                {results.length === 0 ?
+                    (
+                        <Grid item style={{ padding: '2rem' }}>
+                            <Typography variant='h3' style={{ textAlign: 'center' }}>
+                                Welcome!<br /><br />
+                                Please help us prepare for The Shoppies<br />
+                                by searching and nominating your favorite films!<br/>
+                                You can nominate up to 5 films
+                            </Typography>
+                        </Grid>
+                    )
+                    :
                     (
                         results.map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
