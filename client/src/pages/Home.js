@@ -33,7 +33,9 @@ const Home = (props) => {
     const [nominated, setNominated] = useState([]);
 
     useEffect(() => {
-        setNominated(JSON.parse(localStorage.getItem('movies')))
+        if (JSON.parse(localStorage.getItem('movies')) !== null) {
+            setNominated(JSON.parse(localStorage.getItem('movies')))
+        }
     }, [])
 
     function searchMovies(query) {
@@ -86,6 +88,14 @@ const Home = (props) => {
 
     console.log(nominated)
 
+    const titles = []
+
+    for (let i = 0; i < nominated.length; i++) {
+        titles.push(nominated[i].title)
+    }
+
+    console.log(titles)
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -99,15 +109,15 @@ const Home = (props) => {
 
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item >
-                    {nominated.length >= 5 ?
-                        <Alert severity="warning" style={{ textAlign: 'center' }}>
-                            You already nominated the max movie titles (5).<br />
-                            If you would like to change your nominations,<br />
-                            click on the Nominated tab above
-                        </Alert>
-                        :
-                        null
-                    }
+                    {nominated === null ? null : (
+                        nominated.length >= 5 ?
+                            <Alert severity="warning" style={{ textAlign: 'center' }}>
+                                You already nominated the max movie titles (5).<br />
+                                If you would like to change your nominations,<br />
+                                click on the Nominated tab above
+                            </Alert>
+                            : null
+                    )}
                     <Typography variant='h2' gutterBottom>
                         The Shoppies
                     </Typography>
@@ -175,7 +185,7 @@ const Home = (props) => {
                                             year={movie.Year}
                                             image={movie.Poster}
                                             onClick={nominate}
-                                            disabled={nominated.includes(movie.Title) || nominated.length >= 5}
+                                            disabled={titles.includes(movie.Title) || nominated.length >= 5}
                                         >
                                             Nominate
                                         </Button>

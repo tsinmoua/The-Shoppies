@@ -25,8 +25,13 @@ const Nominated = (props) => {
     const [open, setOpen] = useState(false);
     const [votes, setVotes] = useState([])
 
+    console.log(nominated)
+
     useEffect(() => {
-        setNominated(JSON.parse(localStorage.getItem('movies')))
+        if (JSON.parse(localStorage.getItem('movies')) !== null) {
+            setNominated(JSON.parse(localStorage.getItem('movies')))
+        }
+
         API.get()
             .then(res => {
                 let data = res.data
@@ -35,9 +40,39 @@ const Nominated = (props) => {
             })
     }, [])
 
+    let titles = []
 
-    console.log(nominated)
-    console.log(votes)
+    for (let i = 0; i < votes.length; i++) {
+        titles.push(votes[i].title)
+    }
+    console.log(titles)
+
+    let obj = {};
+    for (let i = 0; i < titles.length; i++) {
+        if (obj[titles[i]]) {
+            obj[titles[i]]++;
+        }
+        else {
+            obj[titles[i]] = 1;
+        }
+    }
+
+    let sortable = [];
+    for (let movie in obj) {
+        sortable.push([movie, obj[movie]]);
+    }
+
+    sortable.sort(function (a, b) {
+        return b[1] - a[1];
+    });
+
+    console.log(sortable);
+
+    console.log('votes', votes)
+    // console.log(sortable[0][0])
+    console.log(votes.findIndex(movie => movie.title === sortable[0][0]))
+
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -80,7 +115,7 @@ const Nominated = (props) => {
             </Typography>
 
             <Grid container justify='center' alignItems='center' >
-                {nominated.length === 0 ? null :
+                {nominated === null ? null :
                     (
                         nominated.map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
