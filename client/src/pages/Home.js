@@ -107,7 +107,7 @@ const Home = (props) => {
                     {nominated === null ? null : (
                         nominated.length >= 5 ?
                             <Alert severity="warning" style={{ textAlign: 'center' }}>
-                                You already nominated the max movie titles (5).<br />
+                                You have nominated the max amount of movies (5).<br />
                                 If you would like to change your nominations,<br />
                                 click on the Nominated tab above
                             </Alert>
