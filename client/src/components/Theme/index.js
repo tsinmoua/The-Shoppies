@@ -1,19 +1,19 @@
 import { unstable_createMuiStrictModeTheme as Theme } from '@material-ui/core';
 
-const navy = "#004080"
-const orange = "#FFC04A"
+const black = "#000000"
+const yellow = "#efc62c"
 
 export default Theme({
     palette: {
         common: {
-            navy: navy,
-            orange: orange
+            black: black,
+            yellow: yellow
         },
         primary: {
-            main: navy
+            main: black
         },
         secondary: {
-            main: orange,
+            main: yellow,
         }
     }
 })

@@ -51,7 +51,7 @@ export default function ElevateAppBar(props) {
     return (
         <React.Fragment>
             <ElevationScroll {...props}>
-                <AppBar>
+                <AppBar color='secondary'>
                     <Toolbar>
                         <Typography
                             variant="h4"

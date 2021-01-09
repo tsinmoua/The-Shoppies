@@ -3,6 +3,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, Te
 import MuiAlert from '@material-ui/lab/Alert';
 
 import API from "../utils/API";
+import logo from '../assets/theshoppies.png'
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -94,22 +95,15 @@ const Home = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
-            <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }}>
+            {/* <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }}>
                 The Shoppies
-            </Typography>
+            </Typography> */}
+            <Grid item>
+                <img src={logo} alt='The Shoppies' />
+            </Grid>
 
             <Grid container direction='column' justify='center' alignItems='center'>
-                <Grid item >
-                    {nominated === null ? null : (
-                        nominated.length >= 5 ?
-                            <Alert severity="warning" style={{ textAlign: 'center', margin: '2rem' }}>
-                                You have nominated the max amount of films (5).<br />
-                                If you would like to change your nominations,<br />
-                                click on the Nominations tab above
-                            </Alert>
-                            : null
-                    )}
-                </Grid>
+
 
                 <Grid item style={{ width: '66%', margin: '1rem 0 1rem 0' }}>
                     <form onSubmit={handleFormSubmit}>
@@ -135,17 +129,35 @@ const Home = (props) => {
             </Grid>
 
             <Grid container justify='center' alignItems='center' >
-                {results.length === 0 ?
+                {results.length === 0 || nominated.length >= 5 ?
                     (
-                        <Grid item style={{ padding: '2rem' }}>
-                            <Typography variant='h5' style={{ textAlign: 'center' }}>
-                                Welcome!<br /><br />
-                                Please help us prepare for The Shoppies<br />
-                                by searching and nominating your favorite films!<br />
-                                You can nominate up to 5 films.<br />
-                                You can check out which films are on top in the Nominations tab
-                            </Typography>
-                        </Grid>
+                        (
+                            nominated === null ? null :
+                                (
+                                    nominated.length >= 5 ?
+                                        (
+                                            <Grid item >
+                                                <Alert severity="warning" style={{ textAlign: 'center', margin: '2rem' }}>
+                                                    You have nominated the max amount of films (5).<br />
+                                                    If you would like to change your nominations,<br />
+                                                    click on the Nominations tab above
+                                                </Alert>
+                                            </Grid>
+                                        )
+                                        :
+                                        (
+                                            <Grid item style={{ padding: '2rem' }}>
+                                                <Alert severity='info' style={{ textAlign: 'center', margin: '2rem' }}>
+                                                    Welcome!<br />
+                                                    Please help us prepare for The Shoppies<br />
+                                                    by searching and nominating your favorite films!<br />
+                                                    You can nominate up to 5 films.<br />
+                                                    You can check out which films are on top in the Nominations tab
+                                                </Alert>
+                                            </Grid>
+                                        )
+                                )
+                        )
                     )
                     :
                     (
