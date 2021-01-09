@@ -18,36 +18,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Nominated = (props) => {
-
     const classes = useStyles();
-
-    const [nominated, setNominated] = useState([]);
+    const [userNominations, setUserNominations] = useState([]);
     const [open, setOpen] = useState(false);
     const [votes, setVotes] = useState([])
-
-    console.log(nominated)
+    const [deleted, setDeleted] = useState(0)
 
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('movies')) !== null) {
-            setNominated(JSON.parse(localStorage.getItem('movies')))
+            setUserNominations(JSON.parse(localStorage.getItem('movies')))
         }
 
         API.get()
             .then(res => {
                 let data = res.data
-                console.log(data)
+                console.log('Data from useEffect get API ', data)
                 setVotes(data)
             })
-    }, [])
+            .catch(err => console.log(err));
+    }, [deleted])
+
+    console.log('Check userNominations ', userNominations)
+    console.log('Local storage ', JSON.parse(localStorage.getItem('movies')))
+
+    function deleteUserNomination(title, index) {
+        API.delete(title)
+            .then(res => {
+                // console.log(res)
+                setOpen(true);
+                setDeleted(deleted + 1)
+                userNominations.splice(index, 1)
+                localStorage.setItem('movies', JSON.stringify(userNominations))
+                setUserNominations(...userNominations)
+            })
+            .catch(err => console.log(err));
+    }
 
     let titles = []
+    let obj = {};
+    let sortable = [];
 
     for (let i = 0; i < votes.length; i++) {
         titles.push(votes[i].title)
     }
-    console.log(titles)
 
-    let obj = {};
     for (let i = 0; i < titles.length; i++) {
         if (obj[titles[i]]) {
             obj[titles[i]]++;
@@ -57,7 +71,6 @@ const Nominated = (props) => {
         }
     }
 
-    let sortable = [];
     for (let movie in obj) {
         sortable.push([movie, obj[movie]]);
     }
@@ -66,13 +79,18 @@ const Nominated = (props) => {
         return b[1] - a[1];
     });
 
-    console.log(sortable);
+    // console.log('votes', votes)
+    // console.log('sorted list ', sortable[0][0])
+    // console.log(votes.findIndex(movie => movie.title === sortable[0][0]))
 
-    console.log('votes', votes)
-    // console.log(sortable[0][0])
-    console.log(votes.findIndex(movie => movie.title === sortable[0][0]))
+    function unNominate(event) {
+        event.preventDefault()
 
+        const title = event.currentTarget.getAttribute("title")
+        const index = event.currentTarget.getAttribute("index")
 
+        deleteUserNomination(title, index)
+    }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -80,28 +98,6 @@ const Nominated = (props) => {
         }
         setOpen(false);
     };
-
-    function unNominate(event) {
-        event.preventDefault()
-        event.stopPropagation()
-
-        const title = event.currentTarget.getAttribute("title")
-        const year = event.currentTarget.getAttribute("year")
-        const image = event.currentTarget.getAttribute("image")
-
-        const movieObject = ({ title, year, image });
-
-        API.save(movieObject)
-            .then(res => {
-                // console.log(res)
-                setOpen(true);
-                setNominated([...nominated, movieObject])
-            })
-            .then(res => {
-                localStorage.setItem('movies', JSON.stringify([...nominated, movieObject]))
-            })
-            .catch(err => console.log(err));
-    }
 
     return (
         <Grid container justify='center' alignItems='center'>
@@ -115,9 +111,9 @@ const Nominated = (props) => {
             </Typography>
 
             <Grid container justify='center' alignItems='center' >
-                {nominated === null ? null :
+                {JSON.parse(localStorage.getItem('movies')) === null ? null :
                     (
-                        nominated.map((movie, index) => (
+                        JSON.parse(localStorage.getItem('movies')).map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
                                 <CardMedia style={{ height: '65%' }}>
                                     <img
@@ -150,10 +146,11 @@ const Nominated = (props) => {
                                             variant='contained'
                                             color='primary'
                                             title={movie.title}
+                                            index={index}
                                             year={movie.year}
                                             image={movie.image}
                                             onClick={unNominate}
-                                        // disabled={nominated.includes(movie.Title) || nominated.length >= 5}
+                                        // disabled={userNominations.includes(movie.Title) || userNominations.length >= 5}
                                         >
                                             Un-Nominate
                                         </Button>
@@ -170,7 +167,7 @@ const Nominated = (props) => {
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                     <Alert onClose={handleClose} severity="success">
-                        Successfully nominated
+                        Successfully un-nominated
                     </Alert>
                 </Snackbar>
             </Grid>
