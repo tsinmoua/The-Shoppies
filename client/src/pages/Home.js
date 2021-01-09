@@ -41,7 +41,7 @@ const Home = (props) => {
     function searchMovies(query) {
         API.search(query)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 if ('Error' in res.data) {
                     alert(`${res.data.Error} Please search a different title`)
                 } else {
@@ -86,16 +86,11 @@ const Home = (props) => {
             .catch(err => console.log(err));
     }
 
-    console.log(nominated)
-
     const titles = []
 
     for (let i = 0; i < nominated.length; i++) {
         titles.push(nominated[i].title)
     }
-
-    console.log(titles)
-
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

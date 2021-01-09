@@ -31,7 +31,7 @@ const Nominated = (props) => {
 
         API.get()
             .then(res => {
-                console.log('data from API ', res.data)
+                // console.log('data from API ', res.data)
                 setVotes(res.data)
             })
             .catch(err => console.log(err));
@@ -93,7 +93,7 @@ const Nominated = (props) => {
     results = results.map(JSON.stringify)
     results = new Set(results)
     results = Array.from(results, JSON.parse)
-    console.log(results)
+    // console.log(results)
 
     function unNominate(event) {
         event.preventDefault()
