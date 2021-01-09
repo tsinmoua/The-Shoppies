@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Card, CardMedia, Grid, makeStyles, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import API from "../utils/API";
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     movieCards: {
         margin: '1rem',
-        width: '15%',
+        width: '15rem',
         height: '30rem'
     }
 }));
@@ -29,7 +29,6 @@ const Home = (props) => {
 
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([]);
-    const [open, setOpen] = useState(false);
     const [nominated, setNominated] = useState([]);
 
     useEffect(() => {
@@ -77,10 +76,7 @@ const Home = (props) => {
         API.save(movieObject)
             .then(res => {
                 // console.log(res)
-                setOpen(true);
                 setNominated([...nominated, movieObject])
-            })
-            .then(res => {
                 localStorage.setItem('movies', JSON.stringify([...nominated, movieObject]))
             })
             .catch(err => console.log(err));
@@ -92,13 +88,6 @@ const Home = (props) => {
         titles.push(nominated[i].title)
     }
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
-
     return (
         <Grid container justify='center' alignItems='center'>
 
@@ -107,17 +96,12 @@ const Home = (props) => {
                     {nominated === null ? null : (
                         nominated.length >= 5 ?
                             <Alert severity="warning" style={{ textAlign: 'center', margin: '1rem' }}>
-                                You have nominated the max amount of movies (5).<br />
+                                You have nominated the max amount of films (5).<br />
                                 If you would like to change your nominations,<br />
-                                click on the Nominated tab above
+                                click on the Nominations tab above
                             </Alert>
                             : null
                     )}
-                </Grid>
-                <Grid item>
-                    <Typography variant='h1' gutterBottom>
-                        The Shoppies
-                    </Typography>
                 </Grid>
 
                 <Grid item style={{ width: '66%' }}>
@@ -147,11 +131,12 @@ const Home = (props) => {
                 {results.length === 0 ?
                     (
                         <Grid item style={{ padding: '2rem' }}>
-                            <Typography variant='h3' style={{ textAlign: 'center' }}>
+                            <Typography variant='h5' style={{ textAlign: 'center' }}>
                                 Welcome!<br /><br />
                                 Please help us prepare for The Shoppies<br />
-                                by searching and nominating your favorite films!<br/>
-                                You can nominate up to 5 films
+                                by searching and nominating your favorite films!<br />
+                                You can nominate up to 5 films.<br />
+                                You can check out which films are on top in the Nominations tab
                             </Typography>
                         </Grid>
                     )
@@ -159,7 +144,7 @@ const Home = (props) => {
                     (
                         results.map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
-                                <CardMedia style={{ height: '65%' }}>
+                                <CardMedia style={{ height: '70%' }}>
                                     <img
                                         src={movie.Poster === 'N/A' ? 'https://via.placeholder.com/150?text=No+Image' : movie.Poster}
                                         alt={`${movie.Title} Poster`}
@@ -203,16 +188,6 @@ const Home = (props) => {
                         ))
                     )
                 }
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                >
-                    <Alert onClose={handleClose} severity="success">
-                        Successfully nominated
-                    </Alert>
-                </Snackbar>
             </Grid>
 
         </Grid>

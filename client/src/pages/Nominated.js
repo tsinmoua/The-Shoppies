@@ -7,7 +7,7 @@ import API from "../utils/API";
 const useStyles = makeStyles((theme) => ({
     movieCards: {
         margin: '1rem',
-        width: '15%',
+        width: '15rem',
         height: '30rem'
     },
     line: {
@@ -108,12 +108,12 @@ const Nominated = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
-            <Typography variant='h2' gutterBottom>
+            <Typography variant='h1' gutterBottom>
                 Nominations
                 </Typography>
 
             <hr className={classes.line} />
-            <Typography variant='h6' gutterBottom>
+            <Typography variant='h3' gutterBottom>
                 My Nominations
             </Typography>
 
@@ -179,7 +179,7 @@ const Nominated = (props) => {
             </Grid>
 
             <hr className={classes.line} />
-            <Typography variant='h6' gutterBottom>
+            <Typography variant='h3' gutterBottom>
                 Overall Nominations
             </Typography>
             <Grid container justify='center' alignItems='center' >
@@ -196,13 +196,14 @@ const Nominated = (props) => {
                             <Typography
                                 gutterBottom
                                 variant='subtitle2'
-                                style={{ fontWeight: 'bold' }}
+                                style={{ fontWeight: 'bold', textAlign: 'center' }}
                             >
                                 {movie[0]}
                             </Typography>
                             <Typography
                                 variant="subtitle2"
                                 color="textSecondary"
+                                style={{ textAlign: 'center' }}
                             >
                                 Year Released: {movie[1]}
                             </Typography>
