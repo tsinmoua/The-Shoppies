@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Card, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import API from "../utils/API";
@@ -18,9 +18,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '1%'
     },
     movieCards: {
-        margin: '1rem',
+        margin: '2rem 1rem 2rem 1rem',
         width: '15rem',
-        height: '30rem'
+        height: '32rem',
+        '&:hover': {
+            transition: 'transform .2s',
+            transform: 'scale(1.1)'
+        },
     }
 }));
 
@@ -90,12 +94,15 @@ const Home = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
+            <Typography variant='h1' gutterBottom style={{marginTop: '2rem'}}>
+                The Shoppies
+            </Typography>
 
             <Grid container direction='column' justify='center' alignItems='center'>
                 <Grid item >
                     {nominated === null ? null : (
                         nominated.length >= 5 ?
-                            <Alert severity="warning" style={{ textAlign: 'center', margin: '1rem' }}>
+                            <Alert severity="warning" style={{ textAlign: 'center', margin: '2rem' }}>
                                 You have nominated the max amount of films (5).<br />
                                 If you would like to change your nominations,<br />
                                 click on the Nominations tab above
@@ -104,7 +111,7 @@ const Home = (props) => {
                     )}
                 </Grid>
 
-                <Grid item style={{ width: '66%' }}>
+                <Grid item style={{ width: '66%', margin: '1rem 0 1rem 0' }}>
                     <form onSubmit={handleFormSubmit}>
                         <TextField
                             id="outlined-basic"
@@ -151,39 +158,36 @@ const Home = (props) => {
                                         style={{ height: '100%', width: '100%' }}
                                     />
                                 </CardMedia>
-                                <Box style={{ padding: '1rem', height: '29%' }}>
+                                <CardContent style={{ padding: '.75rem', height: '14%' }}>
                                     <Typography
                                         gutterBottom
                                         variant='subtitle2'
-                                        style={{ fontWeight: 'bold' }}
+                                        style={{ fontWeight: 'bold', textAlign: 'center' }}
                                     >
                                         {movie.Title}
                                     </Typography>
                                     <Typography
                                         variant="subtitle2"
                                         color="textSecondary"
+                                        style={{ textAlign: 'center' }}
                                     >
                                         Year Released: {movie.Year}
                                     </Typography>
-                                    <Box
-                                        display='flex'
-                                        justifyContent='center'
-                                        alignSelf="flex-end"
-                                        style={{ paddingBottom: 'auto' }}
+                                </CardContent>
+                                <CardActions>
+                                    <Button
+                                        variant='contained'
+                                        color='primary'
+                                        title={movie.Title}
+                                        year={movie.Year}
+                                        image={movie.Poster}
+                                        onClick={nominate}
+                                        disabled={titles.includes(movie.Title) || nominated.length >= 5}
+                                        style={{ display: 'flex', margin: 'auto' }}
                                     >
-                                        <Button
-                                            variant='contained'
-                                            color='primary'
-                                            title={movie.Title}
-                                            year={movie.Year}
-                                            image={movie.Poster}
-                                            onClick={nominate}
-                                            disabled={titles.includes(movie.Title) || nominated.length >= 5}
-                                        >
-                                            Nominate
-                                        </Button>
-                                    </Box>
-                                </Box>
+                                        Nominate
+                                    </Button>
+                                </CardActions>
                             </Card>
                         ))
                     )

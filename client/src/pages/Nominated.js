@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Card, CardMedia, Grid, makeStyles, Snackbar, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, Snackbar, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
 import API from "../utils/API";
 
 const useStyles = makeStyles((theme) => ({
     movieCards: {
-        margin: '1rem',
+        margin: '2rem 1rem 2rem 1rem',
         width: '15rem',
-        height: '30rem'
+        height: '32rem',
+        '&:hover': {
+            transition: 'transform .2s',
+            transform: 'scale(1.1)'
+        },
     },
     line: {
         height: '1px',
@@ -108,12 +112,12 @@ const Nominated = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
-            <Typography variant='h1' gutterBottom>
+            <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }}>
                 Nominations
-                </Typography>
+            </Typography>
 
             <hr className={classes.line} />
-            <Typography variant='h3' gutterBottom>
+            <Typography variant='h3' gutterBottom style={{ textAlign: 'center' }}>
                 My Nominations
             </Typography>
 
@@ -122,46 +126,43 @@ const Nominated = (props) => {
                     (
                         JSON.parse(localStorage.getItem('movies')).map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
-                                <CardMedia style={{ height: '65%' }}>
+                                <CardMedia style={{ height: '70%' }}>
                                     <img
                                         src={movie.image}
                                         alt={`${movie.title} Poster`}
                                         style={{ height: '100%', width: '100%' }}
                                     />
                                 </CardMedia>
-                                <Box style={{ padding: '1rem', height: '29%' }}>
+                                <CardContent style={{ padding: '.75rem', height: '14%' }}>
                                     <Typography
                                         gutterBottom
                                         variant='subtitle2'
-                                        style={{ fontWeight: 'bold' }}
+                                        style={{ fontWeight: 'bold', textAlign: 'center' }}
                                     >
                                         {movie.title}
                                     </Typography>
                                     <Typography
                                         variant="subtitle2"
                                         color="textSecondary"
+                                        style={{ textAlign: 'center' }}
                                     >
                                         Year Released: {movie.year}
                                     </Typography>
-                                    <Box
-                                        display='flex'
-                                        justifyContent='center'
-                                        alignSelf="flex-end"
-                                        style={{ paddingBottom: 'auto' }}
+                                </CardContent>
+                                <CardActions>
+                                    <Button
+                                        variant='contained'
+                                        color='primary'
+                                        title={movie.title}
+                                        index={index}
+                                        year={movie.year}
+                                        image={movie.image}
+                                        onClick={unNominate}
+                                        style={{ display: 'flex', margin: 'auto' }}
                                     >
-                                        <Button
-                                            variant='contained'
-                                            color='primary'
-                                            title={movie.title}
-                                            index={index}
-                                            year={movie.year}
-                                            image={movie.image}
-                                            onClick={unNominate}
-                                        >
-                                            Un-Nominate
+                                        Un-Nominate
                                         </Button>
-                                    </Box>
-                                </Box>
+                                </CardActions>
                             </Card>
                         ))
                     )
@@ -185,14 +186,14 @@ const Nominated = (props) => {
             <Grid container justify='center' alignItems='center' >
                 {results.map((movie, index) => (
                     <Card key={index} className={classes.movieCards}>
-                        <CardMedia style={{ height: '65%' }}>
+                        <CardMedia style={{ height: '70%' }}>
                             <img
                                 src={movie[2]}
                                 alt={`${movie[0]} Poster`}
                                 style={{ height: '100%', width: '100%' }}
                             />
                         </CardMedia>
-                        <Box style={{ padding: '1rem', height: '29%' }}>
+                        <CardContent style={{ padding: '.75rem', height: '14%' }}>
                             <Typography
                                 gutterBottom
                                 variant='subtitle2'
@@ -207,21 +208,16 @@ const Nominated = (props) => {
                             >
                                 Year Released: {movie[1]}
                             </Typography>
-                            <Box
-                                display='flex'
-                                justifyContent='center'
-                                alignSelf="flex-end"
-                                style={{ paddingBottom: 'auto' }}
+                        </CardContent>
+                        <CardContent>
+                            <Typography
+                                gutterBottom
+                                variant='h6'
+                                style={{ fontWeight: 'bold', textAlign: 'center' }}
                             >
-                                <Typography
-                                    gutterBottom
-                                    variant='h6'
-                                    style={{ fontWeight: 'bold' }}
-                                >
-                                    Nominations: {movie[3]}
-                                </Typography>
-                            </Box>
-                        </Box>
+                                Nominations: {movie[3]}
+                            </Typography>
+                        </CardContent>
                     </Card>
                 ))
                 }
