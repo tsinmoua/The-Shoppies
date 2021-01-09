@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import API from "../utils/API";
@@ -94,7 +94,7 @@ const Home = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
-            <Typography variant='h1' gutterBottom style={{marginTop: '2rem'}}>
+            <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }}>
                 The Shoppies
             </Typography>
 

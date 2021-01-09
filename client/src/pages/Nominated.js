@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, Snackbar, Typography } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, makeStyles, Snackbar, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
 import API from "../utils/API";
