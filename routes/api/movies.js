@@ -8,8 +8,6 @@ router.route("/")
 
 // Matches with "/api/movies/:id"
 router.route("/:id")
-  .get(moviesController.findById)
-  .put(moviesController.update)
   .delete(moviesController.remove);
 
 module.exports = router;

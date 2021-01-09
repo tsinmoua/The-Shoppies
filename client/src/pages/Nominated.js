@@ -37,9 +37,6 @@ const Nominated = (props) => {
             .catch(err => console.log(err));
     }, [deleted])
 
-    // console.log('Check userNominations ', userNominations)
-    // console.log('Local storage ', JSON.parse(localStorage.getItem('movies')))
-
     function deleteUserNomination(title, index) {
         API.delete(title)
             .then(res => {
@@ -97,10 +94,8 @@ const Nominated = (props) => {
 
     function unNominate(event) {
         event.preventDefault()
-
         const title = event.currentTarget.getAttribute("title")
         const index = event.currentTarget.getAttribute("index")
-
         deleteUserNomination(title, index)
     }
 
