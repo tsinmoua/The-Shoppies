@@ -15,5 +15,8 @@ export default Theme({
         secondary: {
             main: yellow,
         }
+    },
+    typography: {
+        fontFamily: 'Forum'
     }
 })

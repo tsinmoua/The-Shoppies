@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, useScrollTrigger, Button, IconButton, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, useScrollTrigger, Button, IconButton, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom'
+import theshoppies from "../../assets/theshoppies2.png";
 import reel from "../../assets/reel.png";
 
 function ElevationScroll(props) {
@@ -25,11 +26,14 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: 0,
-        paddingRight: 0
+        paddingRight: 0,
+        '&:hover': {
+            backgroundColor: 'transparent',
+        }
     },
     button: {
         marginLeft: 'auto',
-        color: 'white',
+        color: 'black',
         '&:hover': {
             backgroundColor: 'transparent',
             color: theme.palette.common.orange
@@ -53,18 +57,14 @@ export default function ElevateAppBar(props) {
             <ElevationScroll {...props}>
                 <AppBar color='secondary'>
                     <Toolbar>
-                        <Typography
-                            variant="h4"
-                            component={Link} to='/'
-                            className={classes.title}
-                        >
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                                <img src={reel} alt='Movie Reel'
-                                    style={{ height: '57px', margin: 'auto' }}
-                                />
-                            </IconButton>
-                            THE SHOPPIES
-                        </Typography>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" component={Link} to='/'>
+                            <img src={reel} alt='Film'
+                                style={{ height: '50px', margin: 'auto' }}
+                            />
+                            <img src={theshoppies} alt='The Shoppies'
+                                style={{ height: '57px', margin: 'auto' }}
+                            />
+                        </IconButton>
 
                         <Button
                             disableRipple
