@@ -11,12 +11,20 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
     searchInput: {
-        width: '90%'
+        width: '83%',
+        backgroundColor: '#efc62c',
+        fontFamily: 'Forum',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        height: '55px'
     },
     button: {
         height: '56px',
-        width: '9%',
-        marginLeft: '1%'
+        width: '15%',
+        marginLeft: '1%',
+        '& .MuiButton-label': {
+            fontWeight: 'bold'
+        }
     },
     movieCards: {
         margin: '2rem 1rem 2rem 1rem',
@@ -107,7 +115,7 @@ const Home = (props) => {
 
                 <Grid item style={{ width: '66%', margin: '1rem 0 1rem 0' }}>
                     <form onSubmit={handleFormSubmit}>
-                        <TextField
+                        {/* <TextField
                             label="Search for a film"
                             variant="filled"
                             className={classes.searchInput}
@@ -116,6 +124,13 @@ const Home = (props) => {
                             autoFocus
                             color='secondary'
                             style={{ backgroundColor: '#efc62c' }}
+                        /> */}
+                        <input type='text'
+                            placeholder="Search for a film"
+                            className={classes.searchInput}
+                            onChange={handleInputChange}
+                            value={search}
+                            autoFocus
                         />
                         <Button
                             variant='contained'
@@ -165,7 +180,10 @@ const Home = (props) => {
                     (
                         results.map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
-                                <CardMedia style={{ height: '68%' }}>
+                                <CardMedia
+                                    style={{ height: '68%' }}
+                                    title={movie.Title}
+                                >
                                     <img
                                         src={movie.Poster === 'N/A' ? 'https://via.placeholder.com/150?text=No+Image' : movie.Poster}
                                         alt={`${movie.Title} Poster`}
@@ -207,6 +225,31 @@ const Home = (props) => {
                     )
                 }
             </Grid>
+            {/* {Object.keys(movieInfo).length === 0 ? null :
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    title={movieInfo.Title}
+                >
+                    <Grid container justify='flex-start' alignItems='center'>
+                        <Grid item style={{ width: '30%' }}>
+                            <img src={movieInfo.Poster} alt='Poster' />
+                        </Grid>
+                        <Grid item style={{ width: '70%' }}>
+                                <span style={{ fontWeight: 'bolder' }}>Released:</span> <br /> {movieInfo.Released}<br />
+                                <span style={{ fontWeight: 'bolder' }}>Genre:</span> <br /> {movieInfo.Genre}<br />
+                                <span style={{ fontWeight: 'bolder' }}>Actors:</span> <br /> {movieInfo.Actors}<br />
+                                <span style={{ fontWeight: 'bolder' }}>Description:</span> <br /> {movieInfo.Plot}<br />
+                                <span style={{ fontWeight: 'bolder' }}>Ratings:</span> <br /> {movieInfo.Ratings.map((rating, index) => (
+                                    <div key={index}>
+                                        {rating.Source} {rating.Value}
+                                    </div>
+                                ))}<br />
+                        </Grid>
+                    </Grid>
+                </Modal>
+            } */}
 
         </Grid>
     )

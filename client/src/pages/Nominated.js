@@ -131,7 +131,7 @@ const Nominated = (props) => {
                             <Card key={index} className={classes.movieCards}>
                                 <CardMedia style={{ height: '68%' }}>
                                     <img
-                                        src={movie.image}
+                                        src={movie.image === 'N/A' ? 'https://via.placeholder.com/150?text=No+Image' : movie.image}
                                         alt={`${movie.title} Poster`}
                                         style={{ height: '100%', width: '100%' }}
                                     />
@@ -191,7 +191,7 @@ const Nominated = (props) => {
                     <Card key={index} className={classes.movieCards}>
                         <CardMedia style={{ height: '68%' }}>
                             <img
-                                src={movie[2]}
+                                src={movie[2] === 'N/A' ? 'https://via.placeholder.com/150?text=No+Image' : movie[2]}
                                 alt={`${movie[0]} Poster`}
                                 style={{ height: '100%', width: '100%' }}
                             />

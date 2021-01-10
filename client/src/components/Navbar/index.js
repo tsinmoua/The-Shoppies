@@ -51,7 +51,14 @@ export default function ElevateAppBar(props) {
             <ElevationScroll {...props}>
                 <AppBar color='secondary'>
                     <Toolbar>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" component={Link} to='/'>
+                        <IconButton
+                            disableRipple
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="menu"
+                            component={Link} to='/'
+                        >
                             <img src={reel} alt='Film'
                                 style={{ height: '50px', margin: 'auto' }}
                             />

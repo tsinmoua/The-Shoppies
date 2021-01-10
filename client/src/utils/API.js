@@ -7,6 +7,10 @@ export default {
   search: function (query) {
     return axios.get("https://www.omdbapi.com/?apikey=" + APIKEY + "&s=" + query);
   },
+  
+  info: function (query) {
+    return axios.get("https://www.omdbapi.com/?apikey=" + APIKEY + "&t=" + query);
+  },
 
   save: function (movieData) {
     return axios.post("/api/movies", movieData);
