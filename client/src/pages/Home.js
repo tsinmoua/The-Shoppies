@@ -139,7 +139,7 @@ const Home = (props) => {
                                     nominated.length >= 5 ?
                                         (
                                             <Grid item >
-                                                <Alert severity="warning" style={{ textAlign: 'center', margin: '2rem' }}>
+                                                <Alert severity="warning" style={{ textAlign: 'center', margin: '2rem', fontSize: '1.5rem' }}>
                                                     You have nominated the max amount of films ( 5 ).<br />
                                                     If you would like to change your nominations,<br />
                                                     click on the Nominations tab above
@@ -148,8 +148,8 @@ const Home = (props) => {
                                         )
                                         :
                                         (
-                                            <Grid item style={{ padding: '2rem' }}>
-                                                <Alert severity='info' style={{ textAlign: 'center', margin: '2rem' }}>
+                                            <Grid item style={{ padding: '1.5rem' }}>
+                                                <Alert severity='info' style={{ textAlign: 'center', margin: '2rem', fontSize: '1.5rem' }}>
                                                     Welcome!<br />
                                                     Please help us prepare for The Shoppies<br />
                                                     by searching and nominating your favorite films!<br />
