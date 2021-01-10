@@ -160,7 +160,7 @@ const Nominated = (props) => {
                                         year={movie.year}
                                         image={movie.image}
                                         onClick={unNominate}
-                                        style={{ display: 'flex', margin: 'auto' }}
+                                        style={{ display: 'flex', margin: 'auto', fontWeight: 'bold'}}
                                         color='secondary'
                                     >
                                         Un-Nominate
