@@ -120,7 +120,7 @@ const Nominated = (props) => {
             </Typography>
 
             <hr className={classes.line} />
-            <Typography variant='h2' gutterBottom style={{ textAlign: 'center' }} color='secondary'>
+            <Typography variant='h3' gutterBottom style={{ textAlign: 'center' }} color='secondary'>
                 My Nominations
             </Typography>
 
@@ -155,7 +155,6 @@ const Nominated = (props) => {
                                 <CardActions>
                                     <Button
                                         variant='contained'
-                                        color='primary'
                                         title={movie.title}
                                         index={index}
                                         year={movie.year}

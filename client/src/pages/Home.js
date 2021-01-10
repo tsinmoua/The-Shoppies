@@ -116,7 +116,6 @@ const Home = (props) => {
                             autoFocus
                             color='secondary'
                             style={{ backgroundColor: '#efc62c' }}
-                            autoComplete
                         />
                         <Button
                             variant='contained'
@@ -192,7 +191,6 @@ const Home = (props) => {
                                 <CardActions>
                                     <Button
                                         variant='contained'
-                                        color='primary'
                                         title={movie.Title}
                                         year={movie.Year}
                                         image={movie.Poster}
