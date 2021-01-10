@@ -17,6 +17,8 @@ export default Theme({
         }
     },
     typography: {
-        fontFamily: 'Forum'
+        fontFamily: 'Forum',
+        htmlFontSize: 20,
+        fontSize: 20
     }
 })

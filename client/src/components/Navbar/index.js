@@ -36,15 +36,9 @@ const useStyles = makeStyles((theme) => ({
         color: 'black',
         '&:hover': {
             backgroundColor: 'transparent',
-            color: theme.palette.common.orange
-        }
-    },
-    title: {
-        fontSize: '2rem',
-        color: 'white',
-        textDecoration: 'none',
-        '&:hover': {
-            color: theme.palette.common.orange
+        },
+        '& .MuiButton-label': {
+            fontSize: '2rem'
         }
     }
 }));
@@ -70,6 +64,9 @@ export default function ElevateAppBar(props) {
                             disableRipple
                             component={Link} to='/nominated'
                             className={classes.button}
+                            color='primary'
+                            size='large'
+
                         >
                             Nominations
                         </Button>

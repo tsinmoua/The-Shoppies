@@ -9,15 +9,18 @@ const useStyles = makeStyles((theme) => ({
         margin: '2rem 1rem 2rem 1rem',
         width: '15rem',
         height: '32rem',
+        borderStyle: 'solid',
+        borderWidth: '10px',
+        borderColor: '#efc62c',
         '&:hover': {
             transition: 'transform .2s',
-            transform: 'scale(1.1)'
+            transform: 'scale(1.1)',
         },
     },
     line: {
         height: '1px',
         width: '90vw',
-        backgroundColor: 'black'
+        backgroundColor: '#efc62c'
     }
 }));
 
@@ -112,12 +115,12 @@ const Nominated = (props) => {
 
     return (
         <Grid container justify='center' alignItems='center'>
-            <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }}>
+            <Typography variant='h1' gutterBottom style={{ marginTop: '2rem' }} color='secondary'>
                 Nominations
             </Typography>
 
             <hr className={classes.line} />
-            <Typography variant='h3' gutterBottom style={{ textAlign: 'center' }}>
+            <Typography variant='h2' gutterBottom style={{ textAlign: 'center' }} color='secondary'>
                 My Nominations
             </Typography>
 
@@ -126,14 +129,14 @@ const Nominated = (props) => {
                     (
                         JSON.parse(localStorage.getItem('movies')).map((movie, index) => (
                             <Card key={index} className={classes.movieCards}>
-                                <CardMedia style={{ height: '70%' }}>
+                                <CardMedia style={{ height: '68%' }}>
                                     <img
                                         src={movie.image}
                                         alt={`${movie.title} Poster`}
                                         style={{ height: '100%', width: '100%' }}
                                     />
                                 </CardMedia>
-                                <CardContent style={{ padding: '.75rem', height: '14%' }}>
+                                <CardContent style={{ padding: '.75rem', height: '16%' }}>
                                     <Typography
                                         gutterBottom
                                         variant='subtitle2'
@@ -159,6 +162,7 @@ const Nominated = (props) => {
                                         image={movie.image}
                                         onClick={unNominate}
                                         style={{ display: 'flex', margin: 'auto' }}
+                                        color='secondary'
                                     >
                                         Un-Nominate
                                         </Button>
@@ -180,22 +184,21 @@ const Nominated = (props) => {
             </Grid>
 
             <hr className={classes.line} />
-            <Typography variant='h3' gutterBottom>
+            <Typography variant='h3' gutterBottom color='secondary'>
                 Overall Nominations
             </Typography>
             <Grid container justify='center' alignItems='center' >
                 {results.map((movie, index) => (
                     <Card key={index} className={classes.movieCards}>
-                        <CardMedia style={{ height: '70%' }}>
+                        <CardMedia style={{ height: '68%' }}>
                             <img
                                 src={movie[2]}
                                 alt={`${movie[0]} Poster`}
                                 style={{ height: '100%', width: '100%' }}
                             />
                         </CardMedia>
-                        <CardContent style={{ padding: '.75rem', height: '14%' }}>
+                        <CardContent style={{ padding: '.75rem', height: '16%' }}>
                             <Typography
-                                gutterBottom
                                 variant='subtitle2'
                                 style={{ fontWeight: 'bold', textAlign: 'center' }}
                             >

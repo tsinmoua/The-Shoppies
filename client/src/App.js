@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from '@material-ui/core/styles';
 import Theme from "./components/Theme";
 
-import "./App.css";
 import Home from "./pages/Home";
 import Nominated from "./pages/Nominated";
 import Navbar from "./components/Navbar";
